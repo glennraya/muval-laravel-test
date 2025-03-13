@@ -8,7 +8,19 @@
 <body>
     <h1>Create a New Task</h1>
 
-    <form action="/tasks/store" method="POST">
+    {{-- IMPROVEMENT: Provided validation error messages if there's any --}}
+    @if ($errors->any())
+        <div>
+            <ul>
+                @foreach ($errors->all() as $error)
+                    <li>{{ $error }}</li>
+                @endforeach
+            </ul>
+        </div>
+    @endif
+
+    {{-- EXPLANATION: I converted the routes to resourceful route (Laravel's best practice), I changed the action route from '/tasks/store' to simply '/tasks'. Resourceful controller/routing is the recommended approach for this. --}}
+    <form action="{{route('tasks.create') }}" method="POST">
         @csrf
         <label for="title">Title:</label>
         <input type="text" id="title" name="title"><br>

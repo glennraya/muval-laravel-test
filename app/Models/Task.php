@@ -15,5 +15,18 @@ class Task extends Model
     {
         return $this->belongsTo(User::class);
     }
-}
 
+    /**
+     * Automatically set the user_id field to the currently authenticated user.
+     */
+    protected static function boot()
+    {
+        parent::boot();
+
+        static::creating(function ($task) {
+            if (auth()->check()) {
+                $task->user_id = auth()->id();
+            }
+        });
+    }
+}

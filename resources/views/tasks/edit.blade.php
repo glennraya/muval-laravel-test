@@ -8,7 +8,25 @@
 <body>
     <h1>Edit Task</h1>
 
-    <form action="/tasks/update/{{ $task->id }}" method="POST">
+    {{-- IMPROVEMENT: Provided validation error messages if there's any --}}
+    @if ($errors->any())
+        <div>
+            <ul>
+                @foreach ($errors->all() as $error)
+                    <li>{{ $error }}</li>
+                @endforeach
+            </ul>
+        </div>
+    @endif
+
+    {{-- EXPLANATION: To conform to Laravel's best practice, like the other routes, I converted this to 'resourceful route'. I put the @method('PATCH') here. In traditional HTML, the method attribute in the form tag only supports either POST or GET. Laravel
+    provides us with 'method spoofing'. So the @method('PATCH') tells Laravel that this is a PATCH method. --}}
+
+    {{-- Original: <form action="/tasks/update/{{ $task->id }}" method="POST"> --}}
+    <form action="{{ route('tasks.update', $task->id) }}">
+        {{-- This is the method spoofing provided by Laravel. --}}
+        @method('PATCH')
+
         @csrf
         <label for="title">Title:</label>
         <input type="text" id="title" name="title" value="{{ $task->title }}"><br>
