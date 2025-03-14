@@ -5,6 +5,7 @@ use App\Http\Controllers\TaskController;
 use App\Http\Controllers\LoginController;
 
 use App\Http\Controllers\LoginControllerApi;
+use App\Http\Controllers\RegistrationApiController;
 use App\Http\Controllers\RegistrationController;
 
 Route::get('/', [LoginController::class, 'index']);
@@ -33,6 +34,7 @@ Route::group(['middleware' => 'auth'], function () {
     Route::resource('tasks', TaskController::class);
 });
 
-// Login/Logout route for the Vue 3 SPA
+// Registration/Login/Logout route for the Vue 3 SPA
 Route::post('/login-spa', [LoginControllerApi::class, 'login']);
 Route::post('/logout-spa', [LoginControllerApi::class, 'logout']);
+Route::post('/register-spa', [RegistrationApiController::class, 'register']);
