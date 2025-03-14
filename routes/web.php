@@ -1,10 +1,11 @@
 <?php
 
-use App\Http\Controllers\LoginController;
-use App\Http\Controllers\RegistrationController;
 use Illuminate\Support\Facades\Route;
-
 use App\Http\Controllers\TaskController;
+use App\Http\Controllers\LoginController;
+
+use App\Http\Controllers\LoginControllerApi;
+use App\Http\Controllers\RegistrationController;
 
 Route::get('/', [LoginController::class, 'index']);
 
@@ -31,3 +32,7 @@ Route::group(['middleware' => 'auth'], function () {
     // update, and destroy actions, eliminating the need for redundant route definitions.
     Route::resource('tasks', TaskController::class);
 });
+
+// Login/Logout route for the Vue 3 SPA
+Route::post('/login-spa', [LoginControllerApi::class, 'login']);
+Route::post('/logout-spa', [LoginControllerApi::class, 'logout']);

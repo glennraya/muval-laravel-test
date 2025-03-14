@@ -21,7 +21,18 @@ class LoginControllerApi extends Controller
         }
 
         return response()->json([
-            'email' => 'The provided credentials do not match our records.',
-        ]);
+            'invalid_credentials' => 'The provided credentials do not match our records.',
+        ], 422);
+    }
+
+    public function logout(Request $request)
+    {
+        Auth::logout();
+
+        $request->session()->invalidate();
+
+        $request->session()->regenerateToken();
+
+        return response(200);
     }
 }

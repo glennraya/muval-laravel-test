@@ -1,6 +1,11 @@
 <?php
 
-use App\Http\Controllers\LoginControllerApi;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\TaskControllerApi;
 
-Route::post('/login', [LoginControllerApi::class, 'login']);
+Route::get('/user', function (Request $request) {
+    return $request->user();
+})->middleware('auth:sanctum');
+
+Route::resource('tasks', TaskControllerApi::class)->middleware('auth:sanctum');
