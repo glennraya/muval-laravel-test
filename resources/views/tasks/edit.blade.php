@@ -23,7 +23,7 @@
     provides us with 'method spoofing'. So the @method('PATCH') tells Laravel that this is a PATCH method. --}}
 
     {{-- Original: <form action="/tasks/update/{{ $task->id }}" method="POST"> --}}
-    <form action="{{ route('tasks.update', $task->id) }}">
+    <form action="{{ route('tasks.update', $task->id) }}" method="POST">
         {{-- This is the method spoofing provided by Laravel. --}}
         @method('PATCH')
 

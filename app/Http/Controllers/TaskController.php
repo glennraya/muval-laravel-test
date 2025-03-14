@@ -13,13 +13,16 @@ class TaskController extends Controller
     {
         // $tasks = Task::all();
 
-        // EXPLANATION: Instead of getting all the records with ::all() method like the one above, we can select only
-        // the table column that we need. This can improve the performance of the query performance dramatically.
+        // EXPLANATION: Instead of getting all the records with ::all() method like the one above, we select only
+        // the table column that we need. This can improve the performance of the query dramatically.
         // The related 'user' model was also eager-loaded and only fetched the id, and name of the user.
-        // This method will improve database performance overall.
+        // This technique will improve database performance overall.
+        // It will only return all the tasks belonging to the authenticated user.
         // NOTE: Of course we can also paginate the records which is much better "->paginate(10); or ->simplePaginate(10);"
         $tasks = Task::select('id', 'title', 'user_id')
-            ->with('user:id,name')->get();
+            ->where('user_id', auth()->id())
+            ->with('user:id,name')
+            ->get();
 
         foreach ($tasks as $task) {
             $task->user;
@@ -51,7 +54,7 @@ class TaskController extends Controller
             // throw new \Exception('Whoops, we got some server error...', 500);
 
             DB::transaction(function () use ($request) {
-                // The 'user_id' field will be automatically injected whenever a task is created.
+                // The authenticated user's id will be automatically injected whenever a task is created.
                 // Please see app\Models\Task.php under the static 'boot()' method.
                 Task::create($request->validated());
             });
@@ -85,6 +88,8 @@ class TaskController extends Controller
 
         // DB::update("UPDATE tasks SET title = '$title', description = '$description', status = '$status' WHERE id = $id");
 
+        // IMPROVEMENT:
+        // - ...
         try {
             DB::beginTransaction();
 
@@ -106,8 +111,9 @@ class TaskController extends Controller
     {
         // DB::delete("DELETE FROM tasks WHERE id = $id");
 
-        // EXPLANATION: Instead of deleting records using raw SQL, it's much simpler
-        // to do it the Laravel way like the one below. This is very easy to understand right away.
+        // IMPROVEMENT:
+        // - Deleting a recording using Eloquent is much simpler and easy to
+        //   understand instead of using raw SQL queries like the one above.
         Task::destroy($id);
 
         return redirect()->route('tasks.index');

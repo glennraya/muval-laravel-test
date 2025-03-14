@@ -20,7 +20,7 @@
     @endif
 
     {{-- EXPLANATION: I converted the routes to resourceful route (Laravel's best practice), I changed the action route from '/tasks/store' to simply '/tasks'. Resourceful controller/routing is the recommended approach for this. --}}
-    <form action="{{route('tasks.create') }}" method="POST">
+    <form action="{{route('tasks.store') }}" method="POST">
         @csrf
         <label for="title">Title:</label>
         <input type="text" id="title" name="title"><br>
