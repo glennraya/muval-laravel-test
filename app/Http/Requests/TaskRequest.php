@@ -24,12 +24,12 @@ class TaskRequest extends FormRequest
         return [
             'title' => 'required|string',
             'description' => 'required|string',
-            'status' => 'in:pending,in_progress,complete'
+            'status' => 'in:pending,in_progress,complete',
         ];
     }
 
     /**
-     * Get custom error messages for validation rules.
+     * Custom error messages
      */
     public function messages(): array
     {

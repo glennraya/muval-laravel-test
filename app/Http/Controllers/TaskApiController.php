@@ -2,8 +2,8 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Task;
 use App\Http\Requests\TaskRequest;
+use App\Models\Task;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Support\Facades\DB;
 
@@ -14,21 +14,22 @@ class TaskApiController extends Controller
         $tasks = Task::select('id', 'title', 'description', 'status', 'user_id')
             ->where('user_id', auth()->id())
             ->with('user:id,name')
+            ->orderBy('id', 'desc')
             ->get();
 
         return response()->json([
-            'tasks' => $tasks
+            'tasks' => $tasks,
         ]);
     }
 
     public function edit(Task $task)
     {
-        if (!$task) {
-            return "Task not found";
+        if (! $task) {
+            return 'Task not found';
         }
 
         return response()->json([
-            'task' => $task
+            'task' => $task,
         ]);
     }
 
@@ -55,11 +56,9 @@ class TaskApiController extends Controller
     public function update(TaskRequest $request, string $id)
     {
         try {
-            DB::beginTransaction();
-
-            Task::where('id', $id)->update($request->validated());
-
-            DB::commit();
+            DB::transaction(function () use ($request, $id) {
+                Task::where('id', $id)->update($request->validated());
+            });
 
             return response()->json([
                 'success' => true,

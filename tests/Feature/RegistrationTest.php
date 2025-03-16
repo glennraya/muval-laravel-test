@@ -1,13 +1,10 @@
 <?php
 
-use App\Models\User;
-
 test('it can render the registration screen.', function () {
     $response = $this->get('/register');
 
     $response->assertStatus(200);
 });
-
 
 test('it can register a user successfully.', function () {
     $userData = [
@@ -31,15 +28,26 @@ test('registration fails if required fields are missing', function () {
     $response->assertJsonValidationErrors(['name', 'email', 'password']);
 });
 
-
 test('registration fails if password confirmation does not match', function () {
     $response = $this->postJson('/register', [
         'name' => 'John Doe',
         'email' => 'johndoe@example.com',
         'password' => 'password123',
-        'password_confirmation' => 'wrongpassword', // Does not match
+        'password_confirmation' => 'wrongpassword',
     ]);
 
     $response->assertUnprocessable();
     $response->assertJsonValidationErrors(['password']);
+});
+
+test('registration fails if email format is not valid', function () {
+    $response = $this->postJson('/register', [
+        'name' => 'John Doe',
+        'email' => 'johndoe@', // Invalid email format
+        'password' => 'password123',
+        'password_confirmation' => 'password123',
+    ]);
+
+    $response->assertUnprocessable();
+    $response->assertJsonValidationErrors(['email']);
 });

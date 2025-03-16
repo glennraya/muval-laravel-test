@@ -27,7 +27,7 @@ class RegistrationApiController extends Controller
         Auth::login($user);
 
         return response()->json([
-            'success' => true
+            'success' => true,
         ]);
     }
 }

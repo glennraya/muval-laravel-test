@@ -1,12 +1,11 @@
 <?php
 
-use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\TaskController;
+use App\Http\Controllers\LoginApiController;
 use App\Http\Controllers\LoginController;
-
-use App\Http\Controllers\LoginControllerApi;
 use App\Http\Controllers\RegistrationApiController;
 use App\Http\Controllers\RegistrationController;
+use App\Http\Controllers\TaskController;
+use Illuminate\Support\Facades\Route;
 
 Route::get('/', [LoginController::class, 'index']);
 
@@ -35,6 +34,6 @@ Route::group(['middleware' => 'auth'], function () {
 });
 
 // Registration/Login/Logout route for the Vue 3 SPA
-Route::post('/login-spa', [LoginControllerApi::class, 'login']);
-Route::post('/logout-spa', [LoginControllerApi::class, 'logout']);
+Route::post('/login-spa', [LoginApiController::class, 'login']);
+Route::post('/logout-spa', [LoginApiController::class, 'logout']);
 Route::post('/register-spa', [RegistrationApiController::class, 'register']);

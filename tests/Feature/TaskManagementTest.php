@@ -25,7 +25,7 @@ test('authenticated users can add new task.', function () {
     $taskData = [
         'title' => 'New Task',
         'description' => 'This is a test task.',
-        'status' => 'pending'
+        'status' => 'pending',
     ];
 
     $response = $this->actingAs($user)->post('/tasks', $taskData);
@@ -38,7 +38,7 @@ test('unauthenticated users cannot create new tasks.', function () {
     $taskData = [
         'title' => 'New Task',
         'description' => 'This is a test task.',
-        'status' => 'pending'
+        'status' => 'pending',
     ];
 
     $response = $this->post('/tasks', $taskData);
@@ -102,7 +102,6 @@ test('users can delete their own tasks.', function () {
     $response->assertRedirect('/tasks');
     $this->assertDatabaseMissing('tasks', ['id' => $task->id]);
 });
-
 
 test('guest user cannot delete a task and is redirected to login', function () {
     $task = Task::factory()->create();
