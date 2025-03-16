@@ -1,5 +1,10 @@
 # Setup Instructions
 
+## Fork or Clone this repository
+```
+git clone git@github.com:glennraya/muval-laravel-test.git
+```
+
 ## Install Composer dependencies
 ```
 composer install
@@ -24,4 +29,10 @@ SANCTUM_STATEFUL_DOMAINS=localhost:5173,127.0.0.1:5173
 ## Start the backend server
 ```
 php artisan serve
+```
+
+## Run Tests
+I have included server test cases for quick check if the core functionalities are working. You can run the command below:
+```
+php artisan test
 ```
