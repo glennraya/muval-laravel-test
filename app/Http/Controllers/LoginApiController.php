@@ -21,7 +21,10 @@ class LoginApiController extends Controller
         }
 
         return response()->json([
-            'invalid_credentials' => 'The provided credentials do not match our records.',
+            'message' => 'The given data was invalid.',
+            'errors' => [
+                'email' => ['The provided credentials do not match our records.'],
+            ],
         ], 422);
     }
 

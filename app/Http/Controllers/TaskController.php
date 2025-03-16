@@ -42,10 +42,11 @@ class TaskController extends Controller
 
         // return redirect()->route('tasks.index')->with('success', 'Task created successfully.');
 
-        // EXPLANATION: Instead of using raw SQL queries above (which will work), I think it's a good idea to wrap the Eloquent
-        // mass-assignment operation in a try-catch block and using DB transaction. This way, the database will rollback
-        // changes made to the current database operation if there are any exceptions occurs. This is a great way
-        // to prevent unwanted database changes, or orphaned models as a result of an exception.
+        // IMPROVEMENTS:
+        // - Create TaskRequest for input validation
+        // - Encapsulate the create function inside the try-catch block to catch exceptions.
+        // - Used database transaction, so rollback changes to the database in case an error occurs, preserving database integrity.
+        // - Instead of using raw SQL like in the original code, I used eloquent query (mass-assignment) which is recommended in this case.
         try {
             // Simulate server error...
             // throw new \Exception('Whoops, we got some server error...', 500);
