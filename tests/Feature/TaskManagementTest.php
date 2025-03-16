@@ -59,7 +59,7 @@ test('users can update their own tasks.', function () {
     $updatedData = [
         'title' => 'Updated Title',
         'description' => 'Updated Description',
-        'status' => 'complete',
+        'status' => 'completed',
     ];
 
     $response = $this->actingAs($user)->put("/tasks/{$task->id}", $updatedData);
