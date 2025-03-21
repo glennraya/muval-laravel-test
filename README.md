@@ -52,4 +52,3 @@ I have included several test cases for quick check if the core functionalities a
 ```
 php artisan test
 ```
->**IMPORTANT:** You may need to create a new directory named `Unit` inside the `tests/` directory to run PestPHP tests.
